@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>京阪賞楓 5 日</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+/* VOICE: warm, quick to read on a phone mid-walk; a travel companion, not a brochure.
+   IDEA: a pocket travel booklet with a maple-red cover and boarding-pass pages.
+   PICTURE: deep red cover band with a maple branch and leaves drifting down; the day timeline is the main thing.
+   COLOUR and TYPE: maple red field, amber support, gold accent; Noto Sans TC 900 titles, 500 body.
+   LAYOUT: cover band, day chips, hanging-time timeline; fixed bottom tab bar; single column, max 640px. */
+:root{color-scheme:light dark;
+--bg:light-dark(#fffdfb,#170d0b);--ink:light-dark(#2a1410,#f6e9e2);--mute:light-dark(#86675b,#b99c90);
+--card:light-dark(#ffffff,#241510);--line:light-dark(#f1e1d6,#3a251c);--soft:light-dark(#fdf0e7,#2d1a13);
+--red:#b3261e;--red2:#7d1a14;--amber:#e8891c;--gold:#f5c04a;--leaf:light-dark(#b3261e,#ef6a4c)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html{scroll-padding-top:72px}
+body{margin:0;background:var(--bg);color:var(--ink);font:500 16px/1.55 "Noto Sans TC",system-ui,sans-serif;overflow-x:clip;padding-bottom:calc(76px + env(safe-area-inset-bottom))}
+a{color:inherit}
+.cover{position:relative;overflow:hidden;background:linear-gradient(160deg,var(--red) 0%,var(--red2) 100%);color:#fff;padding:calc(22px + env(safe-area-inset-top)) max(5vw,18px) 26px}
+.cover h1{font-weight:900;font-size:clamp(32px,9vw,46px);line-height:1.05;margin:0 0 8px;position:relative;z-index:2;text-wrap:balance}
+.cover p{margin:0;position:relative;z-index:2;opacity:.92;font-size:15px}
+.status{display:inline-block;margin-top:14px;background:var(--gold);color:#3a1a00;font-weight:700;border-radius:999px;padding:6px 14px;font-size:15px;position:relative;z-index:2}
+.branch{position:absolute;right:-20px;top:-10px;width:230px;height:100%;z-index:1;pointer-events:none}
+.fall use{animation:fall 9s linear infinite}
+@keyframes fall{0%{transform:translate(0,-40px) rotate(0)}100%{transform:translate(-50px,260px) rotate(320deg)}}
+@media(prefers-reduced-motion:reduce){.fall use{animation:none}}
+main{max-width:640px;margin:0 auto;padding:0 16px}
+section{display:none;padding-top:18px}section.on{display:block}
+h2{font-weight:900;font-size:24px;line-height:1.2;margin:4px 0 12px}
+h3{font-weight:700;font-size:17px;margin:20px 0 8px}
+.days{display:flex;gap:8px;overflow-x:auto;padding:2px 0 10px;scroll-snap-type:x mandatory;scrollbar-width:none}
+.days button{flex:none;scroll-snap-align:start;min-width:72px;min-height:56px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);border-radius:14px;font:inherit;padding:6px 10px;cursor:pointer;line-height:1.2}
+.days button b{display:block;font-size:17px;font-weight:900}.days button small{font-size:13px;color:var(--mute)}
+.days button[aria-pressed=true]{background:var(--red);border-color:var(--red);color:#fff}.days button[aria-pressed=true] small{color:#ffd9cf}
+.dayhead{background:var(--soft);border-radius:16px;padding:14px 16px;margin:6px 0 14px}
+.dayhead h2{margin:0 0 4px}.dayhead p{margin:0;color:var(--mute);font-size:15px}
+.tl{list-style:none;margin:0;padding:0;position:relative}
+.tl li{display:grid;grid-template-columns:58px 30px minmax(0,1fr);gap:0 8px;padding:0 0 16px;position:relative}
+.tl li::before{content:"";position:absolute;left:80px;top:28px;bottom:0;width:2px;background:var(--line)}
+.tl li:last-child::before{display:none}
+.tm{font-weight:900;font-size:15px;text-align:right;padding-top:5px;white-space:nowrap;color:var(--red)}
+:root[data-theme=dark] .tm{color:#ff8a6e}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]) .tm{color:#ff8a6e}}
+.dot{width:30px;height:30px;border-radius:50%;border:2px solid var(--amber);background:var(--card);cursor:pointer;display:grid;place-items:center;padding:0;margin-top:1px;position:relative;z-index:1}
+.dot svg{width:16px;height:16px;opacity:0}
+.done .dot{background:var(--amber)}.done .dot svg{opacity:1}
+.done .body{opacity:.5}.done .body b{text-decoration:line-through}
+.body b{font-weight:700;font-size:16px;display:block}
+.body p{margin:2px 0 0;color:var(--mute);font-size:14px}
+.tag{display:inline-block;font-size:13px;border-radius:6px;padding:1px 7px;margin-right:6px;background:var(--soft);color:var(--ink)}
+.go{display:inline-flex;align-items:center;gap:4px;margin-top:6px;font-size:14px;font-weight:700;color:var(--red);text-decoration:none;border:1.5px solid currentColor;border-radius:999px;padding:4px 12px;min-height:34px}
+.free .body{border:1.5px dashed var(--line);border-radius:12px;padding:8px 12px}
+.card{background:var(--card);border:1.5px solid var(--line);border-radius:18px;padding:16px;margin-bottom:14px}
+.pass{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:8px;text-align:center}
+.pass .code{font-size:34px;font-weight:900;line-height:1}
+.pass small{display:block;color:var(--mute);font-size:13px}
+.pass .t{font-weight:900;font-size:20px;white-space:nowrap}
+.pass svg{width:40px;height:40px;color:var(--amber)}
+.fl{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1.5px dashed var(--line);padding-bottom:10px;margin-bottom:12px}
+.fl b{font-size:22px;font-weight:900}.fl span{color:var(--mute);font-size:14px}
+table{width:100%;border-collapse:collapse;font-size:15px}
+td,th{padding:8px 4px;border-bottom:1px solid var(--line);text-align:left}
+th{font-size:13px;color:var(--mute);font-weight:500}
+td.r,th.r{text-align:right;white-space:nowrap}
+.seat{font-weight:900;color:var(--red)}
+.kv{display:grid;grid-template-columns:5.5em minmax(0,1fr);gap:6px 10px;font-size:15px;margin:10px 0}
+.kv dt{color:var(--mute)}.kv dd{margin:0}
+.nights{display:inline-block;background:var(--red);color:#fff;border-radius:8px;padding:2px 9px;font-size:13px;font-weight:700}
+.steps{margin:8px 0 0;padding-left:20px}.steps li{margin-bottom:6px}
+.note{font-size:13px;color:var(--mute);margin:8px 0 0}
+.chk{list-style:none;margin:0;padding:0}
+.chk li{display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--line);min-height:48px}
+.chk label{flex:1;display:flex;align-items:center;gap:10px;cursor:pointer;padding:8px 0}
+.chk input{width:22px;height:22px;accent-color:var(--red);flex:none}
+.chk input:checked+span{text-decoration:line-through;color:var(--mute)}
+.chk .x{border:0;background:none;color:var(--mute);font-size:20px;width:44px;height:44px;cursor:pointer}
+.add{display:flex;gap:8px;margin-top:10px}
+.add input{flex:1;font:inherit;font-size:16px;padding:10px 12px;border:1.5px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);min-height:44px}
+.add button,.btn{font:inherit;font-weight:700;border:0;background:var(--red);color:#fff;border-radius:12px;padding:0 16px;min-height:44px;cursor:pointer}
+.conv{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px;align-items:end}
+.conv label{font-size:13px;color:var(--mute)}
+.conv input{width:100%;font:inherit;font-size:22px;font-weight:900;padding:8px 12px;border:1.5px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);min-height:48px}
+.tel{font-size:20px;font-weight:900;white-space:nowrap}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:10;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));background:var(--card);border-top:1.5px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
+nav.tabs a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:60px;text-decoration:none;font-size:12px;color:var(--mute)}
+nav.tabs a svg{width:22px;height:22px}
+nav.tabs a[aria-current=page]{color:var(--red);font-weight:700}
+:root[data-theme=dark] nav.tabs a[aria-current=page]{color:#ff8a6e}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]) nav.tabs a[aria-current=page]{color:#ff8a6e}}
+@media(max-width:360px){.tl li{grid-template-columns:50px 28px minmax(0,1fr)}.tl li::before{left:70px}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<symbol id="leaf" viewBox="0 0 100 100"><path d="M50 4 56 28 72 17 66 40 91 35 74 51 85 58 62 62 67 79 52 69 52 96 48 96 48 69 33 79 38 62 15 58 26 51 9 35 34 40 28 17 44 28Z"/></symbol>
+<symbol id="ok" viewBox="0 0 24 24"><path d="M5 12.5 10 17 19 7" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+</svg>
+
+<header class="cover">
+  <svg class="branch" viewBox="0 0 230 200" aria-hidden="true">
+    <path d="M240 8 C190 20 160 40 120 70 C100 85 80 92 60 96" stroke="#5a1410" stroke-width="5" fill="none" stroke-linecap="round"/>
+    <path d="M170 34 C165 55 150 70 140 80" stroke="#5a1410" stroke-width="3" fill="none"/>
+    <use href="#leaf" x="40" y="74" width="46" height="46" fill="#f5c04a" transform="rotate(-20 63 97)"/>
+    <use href="#leaf" x="96" y="48" width="40" height="40" fill="#e8891c" transform="rotate(15 116 68)"/>
+    <use href="#leaf" x="124" y="70" width="34" height="34" fill="#ff7a52"/>
+    <use href="#leaf" x="150" y="18" width="38" height="38" fill="#f5c04a" transform="rotate(30 169 37)"/>
+    <g class="fall">
+      <use href="#leaf" x="150" y="80" width="18" height="18" fill="#f5c04a" opacity=".9"/>
+      <use href="#leaf" x="90" y="110" width="14" height="14" fill="#ff9a6e" style="animation-delay:-4s"/>
+      <use href="#leaf" x="190" y="100" width="16" height="16" fill="#e8891c" style="animation-delay:-6.5s"/>
+    </g>
+  </svg>
+  <h1>京阪賞楓<br>5 日</h1>
+  <p>2026/11/28（六）– 12/2（三）・大阪 → 京都 → 大阪</p>
+  <span class="status" id="status"></span>
+</header>
+
+<main>
+<section id="plan">
+  <div class="days" id="days" role="group" aria-label="選擇日期"></div>
+  <div id="day"></div>
+</section>
+
+<section id="flight">
+  <h2>航班</h2>
+  <div class="card">
+    <div class="fl"><b>去程 IT210</b><span>台灣虎航・11/28（六）</span></div>
+    <div class="pass">
+      <div><div class="code">TPE</div><small>桃園 T1</small><div class="t">07:00</div></div>
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5z" transform="rotate(90 12 12)"/></svg>
+      <div><div class="code">KIX</div><small>關西 T1</small><div class="t">10:25</div></div>
+    </div>
+    <p class="note">03:30 抵達桃園機場報到。行李每人 20 公斤。</p>
+  </div>
+  <div class="card">
+    <div class="fl"><b>回程 IT211</b><span>台灣虎航・12/2（三）</span></div>
+    <div class="pass">
+      <div><div class="code">KIX</div><small>關西 T1</small><div class="t">11:30</div></div>
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5z" transform="rotate(90 12 12)"/></svg>
+      <div><div class="code">TPE</div><small>桃園 T1</small><div class="t">13:50</div></div>
+    </div>
+    <p class="note">07:30 抵達關西機場。退稅要在託運行李之前辦（見「資訊」頁）。</p>
+  </div>
+  <div class="card">
+    <h3 style="margin-top:0">座位</h3>
+    <table>
+      <thead><tr><th>乘客</th><th class="r">去程</th><th class="r">回程</th><th class="r">行李</th></tr></thead>
+      <tbody>
+        <tr><td>WANG HSIN-YU</td><td class="r seat">18C</td><td class="r seat">20C</td><td class="r">20kg</td></tr>
+        <tr><td>CHEN HSIN-YU</td><td class="r seat">18B</td><td class="r seat">20B</td><td class="r">20kg</td></tr>
+        <tr><td>CHEN JHIH-CHENG</td><td class="r seat">18A</td><td class="r seat">20A</td><td class="r">20kg</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="hotel">
+  <h2>住宿</h2>
+  <div id="hotels"></div>
+</section>
+
+<section id="transit">
+  <h2>交通</h2>
+  <div id="routes"></div>
+  <p class="note">轉乘路線是參考用，出發前用「看路線」按鈕在 Google Maps 確認當下班次。</p>
+</section>
+
+<section id="list">
+  <h2>清單</h2>
+  <div id="lists"></div>
+</section>
+
+<section id="info">
+  <h2>實用資訊</h2>
+  <div class="card">
+    <h3 style="margin-top:0">日幣換算</h3>
+    <div class="conv">
+      <div><label for="jpy">日幣 ¥</label><input id="jpy" type="number" inputmode="decimal" value="1000"></div>
+      <div><label for="twd">台幣 NT$</label><input id="twd" type="number" inputmode="decimal"></div>
+    </div>
+    <div class="add" style="margin-top:12px;align-items:center"><label for="rate" style="font-size:14px;color:var(--mute);white-space:nowrap">匯率 1 日幣 =</label><input id="rate" type="number" inputmode="decimal" step="0.001" value="0.21" style="max-width:110px"><span style="color:var(--mute);font-size:14px">台幣</span></div>
+    <p class="note">匯率可自己改成換匯當天的數字，會記在這支手機上。</p>
+  </div>
+  <div class="card">
+    <h3 style="margin-top:0">退稅新制（2026/11/1 起）</h3>
+    <ul class="steps">
+      <li>店家不再直接扣稅：購物時先付<b>含稅價</b>，結帳時出示護照登記。</li>
+      <li>同一天、同一家店未稅滿 <b>¥5,000</b> 才能退。</li>
+      <li>12/2 到關西機場後，<b>先到「税関 KIOSK」掃護照，再去託運行李</b>。顯示綠色就完成，紅色要拿商品給海關看。</li>
+      <li>退稅商品在日本不要拆開使用，過完税関 KIOSK 才放進託運行李。收據上有任何一件沒帶出境，整張收據可能都不能退。</li>
+      <li>新制剛上路，機場可能排隊，記得留時間。</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3 style="margin-top:0">緊急電話</h3>
+    <dl class="kv">
+      <dt>警察</dt><dd><a class="tel" href="tel:110">110</a></dd>
+      <dt>救護・火警</dt><dd><a class="tel" href="tel:119">119</a></dd>
+      <dt>駐大阪辦事處急難</dt><dd><a class="tel" href="tel:09087944568">090-8794-4568</a><br><small style="color:var(--mute)">只限緊急危難使用</small></dd>
+      <dt>駐大阪辦事處</dt><dd><a class="tel" href="tel:0662278623">06-6227-8623</a><br><small style="color:var(--mute)">護照遺失等一般事務，上班時間</small></dd>
+    </dl>
+  </div>
+</section>
+</main>
+
+<nav class="tabs" aria-label="分頁">
+  <a href="#plan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="17" rx="3"/><path d="M3 9h18M8 2v4M16 2v4"/></svg>行程</a>
+  <a href="#flight"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5z"/></svg>航班</a>
+  <a href="#hotel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 20V8l9-5 9 5v12M8 20v-6h8v6"/></svg>住宿</a>
+  <a href="#transit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="3" width="14" height="14" rx="3"/><path d="M5 11h14M8 21l2-4M16 21l-2-4"/><circle cx="9" cy="14" r=".5"/><circle cx="15" cy="14" r=".5"/></svg>交通</a>
+  <a href="#list"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6h11M9 12h11M9 18h11M4 6l1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2"/></svg>清單</a>
+  <a href="#info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></svg>資訊</a>
+</nav>
+
+<script>
+{
+const S={get(k,d){try{const v=localStorage.getItem('kk26-'+k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem('kk26-'+k,JSON.stringify(v))}catch(e){}}};
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const mq=q=>'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(q);
+const dir=(a,b)=>'https://www.google.com/maps/dir/?api=1&origin='+encodeURIComponent(a)+'&destination='+encodeURIComponent(b)+'&travelmode=transit';
+const RANDOR='https://maps.app.goo.gl/HzRHD5bCqCXmF75j6';
+const MONT=mq('ホテルモントレ京都'), ARASHI=mq('Hotel Arashi Nippombashi');
+
+const DAYS=[
+ {d:'11/28',w:'六',date:'2026-11-28',title:'抵達大阪・梅田',sub:'住 Randor Hotel Namba Osaka Suites',items:[
+  ['01:00','統聯客運 → 桃園機場','','', '交通'],
+  ['03:30','抵達桃園機場 T1 報到','IT210・座位 18A／18B／18C','', '航班'],
+  ['07:00','IT210 桃園起飛','','', '航班'],
+  ['10:25','抵達關西機場 T1','','', '航班'],
+  ['11:30','出境・儲值交通卡','交通費預估約 ¥1,900','', '交通'],
+  ['','南海特急 關西機場 → 天下茶屋，轉堺筋線 → 惠美須町','約 1 小時，路線詳見「交通」頁',dir('関西空港駅','恵美須町駅'),'交通'],
+  ['12:30','Randor Hotel 寄放行李','入住時間前先寄放',RANDOR,'住宿'],
+  ['午餐','梅田百貨美食區','鴨蔥拉麵／其他美食街，或直奔 New Babe 豐崎',mq('梅田 百貨店 レストラン街'),'吃'],
+  ['','必吃 grenier 焦糖布蕾千層酥','營業到 20:00',mq('GRENIER 梅田'),'吃'],
+  ['15:30','妹妹弄頭髮（約 3 小時）','SHES 梅田茶屋町',mq('SHES 梅田茶屋町'),'預約'],
+  ['','自由逛梅田','梅田藍天大廈有聖誕市集',mq('梅田スカイビル'),'逛'],
+  ['晚餐','New Babe 豐崎 豬排・逛吃','',mq('New Babe 豊崎'),'吃'],
+  ['','買宵夜回飯店休息','飯店有微波爐',RANDOR,'住宿']]},
+ {d:'11/29',w:'日',date:'2026-11-29',title:'京都賞楓・東寺夜楓',sub:'住 京都蒙特利酒店',items:[
+  ['06:00','出發 → 京都蒙特利酒店寄放行李','約 1 小時',dir('恵美須町駅','ホテルモントレ京都'),'交通'],
+  ['07:30','旁邊咖啡廳吃早餐','',mq('ホテルモントレ京都 近く カフェ'),'吃'],
+  ['上午','東福寺','秋季特別拜觀期間（11/14–12/6）16:00 停止受理；開門時間以現場公告為準',mq('東福寺'),'賞楓'],
+  ['','永觀堂','',mq('永観堂 禅林寺'),'賞楓'],
+  ['下午','清水寺・吃點心','想吃正餐：清水順正 おかべ家，或街上逛吃',mq('清水寺'),'賞楓'],
+  ['','買伴手禮・賞楓','',mq('清水坂'),'逛'],
+  ['晚上','東寺賞夜楓','點燈 10/31–12/13，18:00–21:30（21:00 最後入場）',mq('東寺'),'賞楓'],
+  ['','回飯店泡大眾池','12:00–23:00（最後入場 22:00）',MONT,'住宿'],
+  ['','附近吃拉麵・隨意逛逛','',mq('烏丸三条 ラーメン'),'吃']]},
+ {d:'11/30',w:'一',date:'2026-11-30',title:'嵐山一日',sub:'住 京都蒙特利酒店',items:[
+  ['07:00','飯店出發 → 嵐山','約 1 小時',dir('ホテルモントレ京都','渡月橋'),'交通'],
+  ['','渡月橋','',mq('渡月橋'),'賞楓'],
+  ['','寶嚴院','',mq('宝厳院'),'賞楓'],
+  ['','商店街吃吃','',mq('嵐山 商店街'),'吃'],
+  ['','野宮神社','',mq('野宮神社'),'逛'],
+  ['','常寂光寺','',mq('常寂光寺'),'賞楓'],
+  ['','二尊院','可去可不去',mq('二尊院'),'可選'],
+  ['','寶筐院','可去可不去',mq('宝筐院'),'可選'],
+  ['晚上','彈性時間','回市區吃吃','','free'],
+  ['','回飯店休息','',MONT,'住宿']]},
+ {d:'12/1',w:'二',date:'2026-12-01',title:'京都 → 大阪・蟹蟹城',sub:'住 Hotel Arashi Nippombashi 1 No006',items:[
+  ['早上','飯店寄放行李','',MONT,'住宿'],
+  ['上午','東福寺賞楓','',mq('東福寺'),'賞楓'],
+  ['下午','回京都飯店取行李 → 大阪','',dir('ホテルモントレ京都','日本橋駅 大阪'),'交通'],
+  ['','Hotel Arashi Nippombashi 放行李','房號 No006',ARASHI,'住宿'],
+  ['','彈性時間','心齋橋／難波逛街','','free'],
+  ['晚餐','蟹蟹城','螃蟹吃到飽／螃蟹套餐',mq('蟹蟹城 大阪'),'吃'],
+  ['','唐吉訶德・藥妝店買伴手禮','記得出示護照登記退稅',mq('ドン・キホーテ 道頓堀'),'逛']]},
+ {d:'12/2',w:'三',date:'2026-12-02',title:'回台灣',sub:'',items:[
+  ['06:30','飯店出發 → 關西機場','',dir('Hotel Arashi Nippombashi','関西空港'),'交通'],
+  ['07:30','抵達關西機場','先到税関 KIOSK 辦退稅，再託運行李',mq('関西国際空港 第1ターミナル'),'退稅'],
+  ['','逛免稅店','','', '逛'],
+  ['11:30','IT211 關西起飛','座位 20A／20B／20C','', '航班'],
+  ['13:50','抵達桃園機場 T1','','', '航班']]}
+];
+
+const HOTELS=[
+ {n:'Randor Hotel Namba Osaka Suites',nights:'11/28・1 晚',area:'大阪・惠美須町',url:RANDOR,notes:['房間有微波爐，可以買宵夜回去熱','中午 12:30 抵達先寄放行李']},
+ {n:'京都蒙特利酒店',jp:'ホテルモントレ京都',nights:'11/29–11/30・2 晚',area:'京都・烏丸三條',url:MONT,notes:['大眾池 12:00–23:00（最後入場 22:00）','11/29 早上 7:30 前寄放行李','12/1 早上寄放行李去東福寺，下午回來拿']},
+ {n:'Hotel Arashi Nippombashi',nights:'12/1・1 晚',area:'大阪・日本橋',url:ARASHI,notes:['房號 No006','12/2 早上 06:30 出發去機場']}
+];
+
+const ROUTES=[
+ {t:'關西機場 → Randor Hotel',when:'11/28',steps:['南海電鐵特急：關西機場站 → 天下茶屋','轉地下鐵堺筋線（北上）→ 惠美須町','步行到飯店，全程約 1 小時'],a:'関西空港駅',b:'恵美須町駅'},
+ {t:'大阪 → 京都蒙特利酒店',when:'11/29',steps:['惠美須町搭堺筋線北上，部分班次直通阪急京都線','直通車可直達阪急「烏丸」站；沒直通就在天神橋筋六丁目轉阪急','從烏丸站步行到飯店'],a:'恵美須町駅',b:'ホテルモントレ京都'},
+ {t:'京都飯店 → 嵐山',when:'11/30',steps:['阪急：烏丸 → 桂，轉嵐山線 → 嵐山站','或地下鐵東西線：烏丸御池 → 太秦天神川，轉嵐電 → 嵐山'],a:'ホテルモントレ京都',b:'渡月橋'},
+ {t:'京都 → Hotel Arashi 日本橋',when:'12/1',steps:['阪急烏丸站搭往大阪方向，直通堺筋線的班次可直達「日本橋」','沒直通就在天神橋筋六丁目轉堺筋線'],a:'ホテルモントレ京都',b:'Hotel Arashi Nippombashi'},
+ {t:'日本橋 → 關西機場',when:'12/2',steps:['步行到南海難波站，搭南海電鐵往關西機場','或堺筋線 日本橋 → 天下茶屋，轉南海往關西機場','預計 07:30 抵達'],a:'Hotel Arashi Nippombashi',b:'関西空港'}
+];
+
+const LISTS=[
+ {k:'pre',t:'行前準備',items:['護照（3 人）','交通卡','日幣現金','網卡／eSIM','充電器・行動電源・轉接頭','Visit Japan Web QR Code','旅遊保險','保暖外套（11 月底早晚冷）','好走的鞋']},
+ {k:'eat',t:'必吃',items:['鴨蔥拉麵','grenier 焦糖布蕾千層酥','New Babe 豐崎 豬排','清水寺點心','嵐山商店街小吃','蟹蟹城']},
+ {k:'buy',t:'伴手禮・購物',items:['唐吉訶德','藥妝店']}
+];
+
+/* status */
+const st=document.getElementById('status');
+const today=new Date(new Date().toLocaleString('en-US',{timeZone:'Asia/Tokyo'}));
+const d0=new Date(2026,10,28),d1=new Date(2026,11,2);
+const t0=new Date(today.getFullYear(),today.getMonth(),today.getDate());
+const diff=Math.round((d0-t0)/864e5);
+st.textContent=diff>0?`還有 ${diff} 天出發`:(t0<=d1?`旅程第 ${1-diff} 天`:'旅程結束，歡迎回家');
+const todayIdx=DAYS.findIndex(x=>{const [y,m,dd]=x.date.split('-').map(Number);return y===t0.getFullYear()&&m===t0.getMonth()+1&&dd===t0.getDate()});
+
+/* itinerary */
+let cur=todayIdx>=0?todayIdx:S.get('day',0);if(!(cur>=0&&cur<DAYS.length))cur=0;
+const done=S.get('done',{});
+const daysEl=document.getElementById('days'),dayEl=document.getElementById('day');
+const renderDays=()=>{daysEl.innerHTML=DAYS.map((x,i)=>`<button type="button" data-i="${i}" aria-pressed="${i===cur}"><b>${x.d}</b><small>週${x.w}${i===todayIdx?'・今天':''}</small></button>`).join('')};
+const renderDay=()=>{
+ const x=DAYS[cur];
+ dayEl.innerHTML=`<div class="dayhead"><h2>Day ${cur+1}｜${esc(x.title)}</h2>${x.sub?`<p>${esc(x.sub)}</p>`:''}</div><ol class="tl">`+
+ x.items.map((it,j)=>{const [tm,ti,no,url,tag]=it,id=cur+'-'+j,isFree=tag==='free';
+  return `<li class="${done[id]?'done':''} ${isFree?'free':''}" data-id="${id}"><div class="tm">${esc(tm)}</div>
+  <button type="button" class="dot" aria-label="標記完成：${esc(ti)}" aria-pressed="${!!done[id]}"><svg><use href="#ok"/></svg></button>
+  <div class="body">${!isFree&&tag?`<span class="tag">${esc(tag)}</span>`:''}<b>${esc(ti)}</b>${no?`<p>${esc(no)}</p>`:''}${url?`<a class="go" href="${esc(url)}" target="_blank" rel="noopener">${url.includes('/dir/')?'看路線':'開地圖'} ›</a>`:''}</div></li>`}).join('')+'</ol>';
+};
+daysEl.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;cur=+b.dataset.i;S.set('day',cur);renderDays();renderDay();const nb=daysEl.children[cur];if(nb&&nb.scrollIntoView)nb.scrollIntoView({inline:'nearest',block:'nearest'})});
+dayEl.addEventListener('click',e=>{const b=e.target.closest('.dot');if(!b)return;const li=b.closest('li'),id=li.dataset.id;done[id]=!done[id];if(!done[id])delete done[id];S.set('done',done);li.classList.toggle('done',!!done[id]);b.setAttribute('aria-pressed',!!done[id])});
+renderDays();renderDay();
+
+/* hotels */
+document.getElementById('hotels').innerHTML=HOTELS.map(h=>`<div class="card"><span class="nights">${esc(h.nights)}</span><h3>${esc(h.n)}</h3>${h.jp?`<p style="margin:-4px 0 6px;font-size:18px;font-weight:700">${esc(h.jp)}</p>`:''}<p class="note" style="margin-top:0">${esc(h.area)}</p><ul class="steps">${h.notes.map(n=>`<li>${esc(n)}</li>`).join('')}</ul><a class="go" href="${esc(h.url)}" target="_blank" rel="noopener">開地圖 ›</a></div>`).join('');
+
+/* routes */
+document.getElementById('routes').innerHTML=ROUTES.map(r=>`<div class="card"><span class="nights">${esc(r.when)}</span><h3>${esc(r.t)}</h3><ol class="steps">${r.steps.map(s=>`<li>${esc(s)}</li>`).join('')}</ol><a class="go" href="${esc(dir(r.a,r.b))}" target="_blank" rel="noopener">看路線 ›</a></div>`).join('');
+
+/* checklists */
+const custom=S.get('custom',{}),checked=S.get('checked',{});
+const listsEl=document.getElementById('lists');
+const renderLists=()=>{listsEl.innerHTML=LISTS.map(L=>{const all=[...L.items.map(t=>({t,c:false})),...(custom[L.k]||[]).map(t=>({t,c:true}))];
+ return `<div class="card"><h3 style="margin-top:0">${esc(L.t)}</h3><ul class="chk">${all.map((o,i)=>{const id=L.k+':'+o.t;return `<li><label><input type="checkbox" data-id="${esc(id)}" ${checked[id]?'checked':''}><span>${esc(o.t)}</span></label>${o.c?`<button type="button" class="x" data-k="${L.k}" data-t="${esc(o.t)}" aria-label="刪除 ${esc(o.t)}">×</button>`:''}</li>`}).join('')}</ul>
+ <form class="add" data-k="${L.k}"><input name="v" placeholder="新增項目" aria-label="新增到${esc(L.t)}" autocomplete="off"><button>新增</button></form></div>`}).join('')};
+listsEl.addEventListener('change',e=>{const c=e.target;if(c.type!=='checkbox')return;checked[c.dataset.id]=c.checked;if(!c.checked)delete checked[c.dataset.id];S.set('checked',checked)});
+listsEl.addEventListener('submit',e=>{e.preventDefault();const f=e.target,v=f.v.value.trim();if(!v)return;(custom[f.dataset.k]=custom[f.dataset.k]||[]);if(!custom[f.dataset.k].includes(v))custom[f.dataset.k].push(v);S.set('custom',custom);renderLists();listsEl.querySelector(`form[data-k="${f.dataset.k}"] input`).focus()});
+listsEl.addEventListener('click',e=>{const b=e.target.closest('.x');if(!b)return;const k=b.dataset.k;custom[k]=(custom[k]||[]).filter(t=>t!==b.dataset.t);delete checked[k+':'+b.dataset.t];S.set('custom',custom);S.set('checked',checked);renderLists()});
+renderLists();
+
+/* converter */
+const jpy=document.getElementById('jpy'),twd=document.getElementById('twd'),rate=document.getElementById('rate');
+rate.value=S.get('rate',0.21);
+const r=()=>parseFloat(rate.value)||0;
+const fromJ=()=>{twd.value=jpy.value===''?'':Math.round(jpy.value*r())};
+const fromT=()=>{jpy.value=twd.value===''||!r()?'':Math.round(twd.value/r())};
+jpy.addEventListener('input',fromJ);twd.addEventListener('input',fromT);rate.addEventListener('input',()=>{S.set('rate',rate.value);fromJ()});fromJ();
+
+/* tabs */
+const ids=['plan','flight','hotel','transit','list','info'];
+const route=()=>{const h=location.hash.slice(1),id=ids.includes(h)?h:'plan';
+ ids.forEach(x=>document.getElementById(x).classList.toggle('on',x===id));
+ document.querySelectorAll('nav.tabs a').forEach(a=>{if(a.getAttribute('href')==='#'+id)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});
+ window.scrollTo(0,0)};
+window.addEventListener('hashchange',route);route();
+}
+</script>
+</body>
+</html>
