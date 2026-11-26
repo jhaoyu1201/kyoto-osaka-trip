@@ -152,9 +152,9 @@ nav.tabs a[aria-current=page]{color:var(--red);font-weight:700}
     <table>
       <thead><tr><th>乘客</th><th class="r">去程</th><th class="r">回程</th><th class="r">行李</th></tr></thead>
       <tbody>
-        <tr><td>WANG HSIN-YU</td><td class="r seat">18C</td><td class="r seat">20C</td><td class="r">20kg</td></tr>
-        <tr><td>CHEN HSIN-YU</td><td class="r seat">18B</td><td class="r seat">20B</td><td class="r">20kg</td></tr>
-        <tr><td>CHEN JHIH-CHENG</td><td class="r seat">18A</td><td class="r seat">20A</td><td class="r">20kg</td></tr>
+        <tr><td>W.H.Y.</td><td class="r seat">18C</td><td class="r seat">20C</td><td class="r">20kg</td></tr>
+        <tr><td>C.H.Y.</td><td class="r seat">18B</td><td class="r seat">20B</td><td class="r">20kg</td></tr>
+        <tr><td>C.J.C.</td><td class="r seat">18A</td><td class="r seat">20A</td><td class="r">20kg</td></tr>
       </tbody>
     </table>
   </div>
@@ -242,11 +242,11 @@ const DAYS=[
   ['','自由逛梅田','梅田藍天大廈有聖誕市集',mq('梅田スカイビル'),'逛'],
   ['晚餐','New Babe 豐崎 豬排・逛吃','',mq('New Babe 豊崎'),'吃'],
   ['','買宵夜回飯店休息','飯店有微波爐',RANDOR,'住宿']]},
- {d:'11/29',w:'日',date:'2026-11-29',title:'京都賞楓・東寺夜楓',sub:'住 京都蒙特利酒店',items:[
+ {d:'11/29',w:'日',date:'2026-11-29',title:'真如堂・永觀堂・清水寺・東寺夜楓',sub:'住 京都蒙特利酒店',items:[
   ['06:00','出發 → 京都蒙特利酒店寄放行李','約 1 小時',dir('恵美須町駅','ホテルモントレ京都'),'交通'],
   ['07:30','旁邊咖啡廳吃早餐','',mq('ホテルモントレ京都 近く カフェ'),'吃'],
-  ['上午','東福寺','秋季特別拜觀期間（11/14–12/6）16:00 停止受理；開門時間以現場公告為準',mq('東福寺'),'賞楓'],
-  ['','永觀堂','',mq('永観堂 禅林寺'),'賞楓'],
+  ['上午','真如堂','本堂前往西走的石板路是紅葉隧道，三重塔配楓葉是必拍景',mq('真如堂'),'賞楓'],
+  ['','永觀堂','從真如堂往南步行約 15–20 分鐘',dir('真如堂','永観堂 禅林寺').replace('transit','walking'),'賞楓'],
   ['下午','清水寺・吃點心','想吃正餐：清水順正 おかべ家，或街上逛吃',mq('清水寺'),'賞楓'],
   ['','買伴手禮・賞楓','',mq('清水坂'),'逛'],
   ['晚上','東寺賞夜楓','點燈 10/31–12/13，18:00–21:30（21:00 最後入場）',mq('東寺'),'賞楓'],
@@ -263,11 +263,11 @@ const DAYS=[
   ['','寶筐院','可去可不去',mq('宝筐院'),'可選'],
   ['晚上','彈性時間','回市區吃吃','','free'],
   ['','回飯店休息','',MONT,'住宿']]},
- {d:'12/1',w:'二',date:'2026-12-01',title:'京都 → 大阪・蟹蟹城',sub:'住 Hotel Arashi Nippombashi 1 No006',items:[
+ {d:'12/1',w:'二',date:'2026-12-01',title:'京都 → 大阪・蟹蟹城',sub:'住 Hotel Arashi Nippombashi',items:[
   ['早上','飯店寄放行李','',MONT,'住宿'],
   ['上午','東福寺賞楓','',mq('東福寺'),'賞楓'],
   ['下午','回京都飯店取行李 → 大阪','',dir('ホテルモントレ京都','日本橋駅 大阪'),'交通'],
-  ['','Hotel Arashi Nippombashi 放行李','房號 No006',ARASHI,'住宿'],
+  ['','Hotel Arashi Nippombashi 放行李','',ARASHI,'住宿'],
   ['','彈性時間','心齋橋／難波逛街','','free'],
   ['晚餐','蟹蟹城','螃蟹吃到飽／螃蟹套餐',mq('蟹蟹城 大阪'),'吃'],
   ['','唐吉訶德・藥妝店買伴手禮','記得出示護照登記退稅',mq('ドン・キホーテ 道頓堀'),'逛']]},
@@ -282,7 +282,7 @@ const DAYS=[
 const HOTELS=[
  {n:'Randor Hotel Namba Osaka Suites',nights:'11/28・1 晚',area:'大阪・惠美須町',url:RANDOR,notes:['房間有微波爐，可以買宵夜回去熱','中午 12:30 抵達先寄放行李']},
  {n:'京都蒙特利酒店',jp:'ホテルモントレ京都',nights:'11/29–11/30・2 晚',area:'京都・烏丸三條',url:MONT,notes:['大眾池 12:00–23:00（最後入場 22:00）','11/29 早上 7:30 前寄放行李','12/1 早上寄放行李去東福寺，下午回來拿']},
- {n:'Hotel Arashi Nippombashi',nights:'12/1・1 晚',area:'大阪・日本橋',url:ARASHI,notes:['房號 No006','12/2 早上 06:30 出發去機場']}
+ {n:'Hotel Arashi Nippombashi',nights:'12/1・1 晚',area:'大阪・日本橋',url:ARASHI,notes:['12/2 早上 06:30 出發去機場']}
 ];
 
 const ROUTES=[
